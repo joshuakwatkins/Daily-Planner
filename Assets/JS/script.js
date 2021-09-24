@@ -1,3 +1,13 @@
+
+// these two variables and setInterval display the current time and updates every 10th of a second
+var timeDisplayEl = $("#currentDay");
+
+var displayTime = function () {
+    var currentTime = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+    timeDisplayEl.text(currentTime);
+  };
+setInterval(displayTime, 100);
+
 var pappy = $(".container");
 var timeSlots = [];
 var theTime = [
@@ -14,6 +24,8 @@ var theTime = [
   "7PM",
   "8PM",
 ];
+
+// This for loop builds 12 time slot blocks with the appropriate styling.
 for (var i = 0; i < 12; i++) {
   var timeSlotDiv = $("<div>").attr({
     id: "time-slot-" + (i + 1),
@@ -24,6 +36,7 @@ for (var i = 0; i < 12; i++) {
   });
   var hourPTag = $("<p>").text(theTime[i]);
   var currentState;
+//   this if statement determines 
   if (moment(theTime[i], "hA").isSame()){
       currentState = "present";
   } else if (moment(theTime[i], "hA").isBefore()){
@@ -44,6 +57,7 @@ for (var i = 0; i < 12; i++) {
   var saveIcon = $("<i>").attr({
     class: "fa fa-save",
   });
+//   this is the actual building of the elements. 
   timeSlotDiv.append(timeSlotHourDiv);
   timeSlotHourDiv.append(hourPTag);
   timeSlotDiv.append(timeSlotTextDiv);
@@ -51,6 +65,7 @@ for (var i = 0; i < 12; i++) {
   timeSlotDiv.append(saveButton);
   saveButton.append(saveIcon);
   pappy.append(timeSlotDiv);
+//   this is the save function
   saveButton.on("click", function() {
       var userEntry = $(this).prev().children("textarea").val();
       var entryName = $(this).parent().attr("id");
@@ -60,11 +75,7 @@ for (var i = 0; i < 12; i++) {
       console.log($(this));
   });
   console.log(timeSlotDiv);
+//   this recalls the user's saved inputs
   this.userInput.val(localStorage.getItem("time-slot-" + (i + 1)))
   }
 
-var displayTime = function () {
-  var currentTime = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
-  timeDisplayEl.text(currentTime);
-};
-setInterval(displayTime, 100);
